@@ -31,8 +31,6 @@ The **Express Pokémon API** is a RESTful API built using Node.js and Express th
    ```bash
    npm start
    ```
-   The server will run on `http://localhost:3000` by default.
-
 ## API Endpoints
 
 ### Get All Pokémon
@@ -52,13 +50,6 @@ The **Express Pokémon API** is a RESTful API built using Node.js and Express th
 ## API Documentation
 For detailed API documentation, visit the Swagger UI:
 [Express Pokémon API Docs](https://express-pokemon-api.onrender.com/api-docs/#/POKEMON/get_pokemon)
-
-## Environment Variables
-Create a `.env` file in the root directory and add:
-```env
-PORT=3000
-POKEAPI_BASE_URL=https://pokeapi.co/api/v2
-```
 
 ## Contribution
 Feel free to fork the repo, submit issues, and contribute enhancements.
