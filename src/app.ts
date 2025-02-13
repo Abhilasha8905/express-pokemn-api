@@ -1,7 +1,7 @@
-import express, { Application } from "express";
-import swaggerUi from "swagger-ui-express";
-import { swaggerDocument } from "./swagger";
-import logger from "./utils/logger";
+import express, { Application } from 'express';
+import swaggerUi from 'swagger-ui-express';
+import { swaggerDocument } from './swagger';
+import logger from './utils/logger';
 
 declare global {
   namespace Express {
@@ -25,7 +25,7 @@ class App {
     this.app = express();
     this.port = appInit.port;
 
-    this.app.disable("x-powered-by");
+    this.app.disable('x-powered-by');
     this.middlewares(appInit.middleWares);
     this.swagger();
     this.routes(appInit.controllers);
@@ -44,21 +44,21 @@ class App {
 
   private swagger() {
     this.app.use(
-      "/api-docs",
+      '/api-docs',
       swaggerUi.serve,
-      swaggerUi.setup(swaggerDocument)
+      swaggerUi.setup(swaggerDocument),
     );
   }
   private routes(controllers: {
     forEach: (arg0: (controller: any) => void) => void;
   }) {
     controllers.forEach((controller) => {
-      this.app.use("/api/", controller.router);
+      this.app.use('/api/', controller.router);
     });
   }
 
   private assets() {
-    this.app.use(express.static("build"));
+    this.app.use(express.static('build'));
   }
 
   private exceptionHandler(exceptionHandlers: {
@@ -71,7 +71,7 @@ class App {
 
   public listen(): void {
     this.app.listen(this.port, () => {
-      logger.info(null, `App listening on PORT :${this.port}`);
+      logger.startLog(`App listening on PORT :${this.port}`);
     });
   }
 }

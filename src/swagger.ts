@@ -1,86 +1,55 @@
 export const swaggerDocument = {
-  swagger: "2.0",
+  swagger: '2.0',
   info: {
-    version: "1.0.0",
-    title: "Pokemon API",
+    version: '1.0.0',
+    title: 'Pokemon API',
   },
-  basePath: "/api",
-  schemes: "http",
+  basePath: '/api',
+  schemes: 'http',
   paths: {
-    "/health": {
+    '/health': {
       get: {
-        tags: ["HEALTH"],
-        summary: "check health of the server",
+        tags: ['HEALTH'],
+        summary: 'check health of the server',
         responses: {
-          "200": {
-            description: "server health",
+          '200': {
+            description: 'server health',
             schema: {
-              type: "object",
-              properties: {
-                status: {
-                  type: "string",
-                  description: "server status",
-                },
-              },
+              $ref: '#/definitions/Status',
             },
           },
         },
       },
     },
-    "/pokemon": {
+    '/pokemon': {
       get: {
-        tags: ["POKEMON"],
-        summary: "Get list of Pokémon",
-        description: "Returns a list of Pokémon",
-        parameters: [
-          {
-            name: "offset",
-            in: "query",
-            description: "Number of records to skip",
-            required: false,
-            schema: {
-              type: "integer",
-              default: 0,
-            },
-          },
-          {
-            name: "limit",
-            in: "query",
-            description: "Maximum number of records to return",
-            required: false,
-            schema: {
-              type: "integer",
-              default: 40,
-            },
-          },
-          {
-            name: "search",
-            in: "query",
-            description: "search text for pokemon name",
-            required: false,
-            schema: {
-              type: "text",
-            },
-          },
-          {
-            name: "show_favourites_only",
-            in: "query",
-            description: "show only favourite pokemons",
-            required: false,
-            schema: {
-              type: "boolean",
-            },
-          },
-        ],
+        tags: ['POKEMON'],
+        summary: 'Get list of Pokémon',
+        description: 'Returns a list of Pokémon',
         responses: {
-          "200": {
-            description: "A list of Pokémon",
-            content: {
-              "application/json": {
-                schema: {
-                  type: "array",
+          '200': {
+            description: 'A list of Pokémon',
+            schema: {
+              type: 'object',
+              properties: {
+                status: {
+                  type: 'object',
+                  description: 'server status',
+                  properties: {
+                    operation_id: {
+                      type: 'string',
+                      description: 'request identifier id',
+                    },
+                    message: {
+                      type: 'string',
+                      description: 'SUCCESS / ERROR',
+                    },
+                  },
+                },
+                data: {
+                  type: 'array',
                   items: {
-                    $ref: "#/definitions/Pokemon",
+                    $ref: '#/definitions/Pokemon',
                   },
                 },
               },
@@ -89,158 +58,181 @@ export const swaggerDocument = {
         },
       },
     },
-    "/{entity_type}/favourite/{entity_id}": {
+    '/{entity_type}/favourite/{entity_id}': {
       post: {
-        tags: ["FAVOURITE"],
-        summary: "Add an entity to favourites",
+        tags: ['FAVOURITE'],
+        summary: 'Add an entity to favourites',
         description:
-          "This endpoint allows users to mark an entity as a favourite.",
+          'This endpoint allows users to mark an entity as a favourite.',
         parameters: [
           {
-            name: "entity_type",
-            in: "path",
-            description: "The type of entity",
+            name: 'entity_type',
+            in: 'path',
+            description: 'The type of entity',
             required: true,
-            type: "string",
-            example: "pokemon",
+            type: 'string',
+            example: 'pokemon',
           },
           {
-            name: "entity_id",
-            in: "path",
-            description: "The unique ID of the entity",
+            name: 'entity_id',
+            in: 'path',
+            description: 'The unique ID of the entity',
             required: true,
-            type: "string",
-            example: "11",
+            type: 'string',
+            example: '11',
           },
         ],
         responses: {
-          "200": {
-            description: "Entity successfully added to favourites",
+          '200': {
+            description: 'Entity successfully added to favourites',
             schema: {
-              type: "object",
+              type: 'object',
               properties: {
                 message: {
-                  type: "string",
-                  example: "Entity added to favourites successfully",
+                  type: 'string',
+                  example: 'Entity added to favourites successfully',
                 },
               },
             },
           },
-          "400": {
-            description: "Bad request (e.g., invalid entity_type or entity_id)",
+          '400': {
+            description: 'Bad request (e.g., invalid entity_type or entity_id)',
           },
-          "404": {
-            description: "Entity not found",
+          '404': {
+            description: 'Entity not found',
           },
-          "500": {
-            description: "Internal server error",
+          '500': {
+            description: 'Internal server error',
           },
         },
       },
       delete: {
-        tags: ["FAVOURITE"],
-        summary: "Remove an entity to favourites",
+        tags: ['FAVOURITE'],
+        summary: 'Remove an entity to favourites',
         description:
-          "This endpoint allows users to unmark an entity as a favourite.",
+          'This endpoint allows users to unmark an entity as a favourite.',
         parameters: [
           {
-            name: "entity_type",
-            in: "path",
-            description: "The type of entity",
+            name: 'entity_type',
+            in: 'path',
+            description: 'The type of entity',
             required: true,
-            type: "string",
-            example: "pokemon",
+            type: 'string',
+            example: 'pokemon',
           },
           {
-            name: "entity_id",
-            in: "path",
-            description: "The unique ID of the entity",
+            name: 'entity_id',
+            in: 'path',
+            description: 'The unique ID of the entity',
             required: true,
-            type: "string",
-            example: "11",
+            type: 'string',
+            example: '11',
           },
         ],
         responses: {
-          "200": {
-            description: "Entity successfully removed to favourites",
+          '200': {
+            description: 'Entity successfully removed to favourites',
             schema: {
-              type: "object",
+              type: 'object',
               properties: {
                 message: {
-                  type: "string",
-                  example: "Entity removed from favourites successfully",
+                  type: 'string',
+                  example: 'Entity removed from favourites successfully',
                 },
               },
             },
           },
-          "400": {
-            description: "Bad request (e.g., invalid entity_type or entity_id)",
+          '400': {
+            description: 'Bad request (e.g., invalid entity_type or entity_id)',
           },
-          "404": {
-            description: "Entity not found",
+          '404': {
+            description: 'Entity not found',
           },
-          "500": {
-            description: "Internal server error",
+          '500': {
+            description: 'Internal server error',
           },
         },
       },
     },
   },
   definitions: {
+    Status: {
+      type: 'object',
+      properties: {
+        status: {
+          type: 'object',
+          description: 'server status',
+          properties: {
+            operation_id: {
+              type: 'string',
+              description: 'request identifier id',
+            },
+            message: {
+              type: 'string',
+              description: 'SUCCESS / ERROR',
+            },
+          },
+        },
+      },
+    },
     Pokemon: {
-      type: "object",
+      type: 'object',
       properties: {
         name: {
-          type: "string",
-          description: "Name of the Pokémon",
+          type: 'string',
+          description: 'Name of the Pokémon',
         },
         id: {
-          type: "string",
-          description: "Unique identifier of the Pokémon",
+          type: 'string',
+          description: 'Unique identifier of the Pokémon',
         },
         front_image: {
-          type: "string",
-          description: "URL of the front image of the Pokémon",
+          type: 'string',
+          description: 'URL of the front image of the Pokémon',
         },
         back_image: {
-          type: "string",
-          description: "URL of the back image of the Pokémon",
+          type: 'string',
+          description: 'URL of the back image of the Pokémon',
         },
         weight: {
-          type: "string",
-          description: "Weight of the Pokémon",
+          type: 'string',
+          description: 'Weight of the Pokémon',
         },
         height: {
-          type: "string",
-          description: "Height of the Pokémon",
+          type: 'string',
+          description: 'Height of the Pokémon',
         },
         hp: {
-          type: "string",
-          description: "Hit points of the Pokémon",
+          type: 'string',
+          description: 'Hit points of the Pokémon',
         },
         attack: {
-          type: "string",
-          description: "Attack stat of the Pokémon",
+          type: 'string',
+          description: 'Attack stat of the Pokémon',
         },
         defence: {
-          type: "string",
-          description: "Defence stat of the Pokémon",
+          type: 'string',
+          description: 'Defence stat of the Pokémon',
         },
         special_attack: {
-          type: "string",
-          description: "Special attack stat of the Pokémon",
+          type: 'string',
+          description: 'Special attack stat of the Pokémon',
         },
         special_defence: {
-          type: "string",
-          description: "Special defence stat of the Pokémon",
+          type: 'string',
+          description: 'Special defence stat of the Pokémon',
         },
         speed: {
-          type: "string",
-          description: "Speed stat of the Pokémon",
+          type: 'string',
+          description: 'Speed stat of the Pokémon',
         },
         type: {
-          type: "string",
-          description: "Type of the Pokémon",
+          type: 'string',
+          description: 'Type of the Pokémon',
+        },
+        is_favourite: {
+          type: 'boolean',
+          description: 'Indicates if Pokémon is favourite',
         },
       },
     },

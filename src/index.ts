@@ -1,38 +1,40 @@
-import App from "./app";
+import App from './app';
+import { PORT } from './config';
 
 // providers
-import connectDB from "./providers/database";
+import connectToDatabase from './providers/database';
 
 // middlewares
-import LoggerMiddleware from "./middlewares/req-logger";
-import RouteNotFoundMiddleware from "./middlewares/not-found";
-import ExceptionHandlerMiddleware from "./middlewares/exception-handler";
+import AuthMiddleware from './middlewares/authentication';
+import LoggerMiddleware from './middlewares/req-logger';
+import RouteNotFoundMiddleware from './middlewares/not-found';
+import ExceptionHandlerMiddleware from './middlewares/exception-handler';
 
 // controllers
-import HealthController from "./controllers/health-controller";
-import PokemonController from "./controllers/pokemon-controller";
+import HealthController from './controllers/health-controller';
+import PokemonController from './controllers/pokemon-controller';
+import FavouriteController from './controllers/favourite-controller';
 
 // servies
-import PokemonService from "./services/pokemon-service";
+import PokemonService from './services/pokemon-service';
+import FavouriteService from './services/favourite-service';
+import CacheService from './services/cache-service';
 
 // fatal handlers
-import { handleUncaughtErrors } from "./utils/fatal";
-import AuthMiddleware from "./middlewares/authentication";
-import FavouriteController from "./controllers/favourite-controller";
-import FavouriteService from "./services/favourite-service";
+import { handleUncaughtErrors } from './utils/fatal';
 handleUncaughtErrors();
 
-connectDB();
+connectToDatabase();
 
 const app = new App({
   controllers: [
     new HealthController(),
-    new PokemonController(new PokemonService()),
+    new PokemonController(new PokemonService(new CacheService())),
     new FavouriteController(new FavouriteService()),
   ],
   middleWares: [AuthMiddleware, LoggerMiddleware],
   exceptionHandlers: [RouteNotFoundMiddleware, ExceptionHandlerMiddleware],
-  port: 5001,
+  port: Number(PORT),
 });
 
 app.listen();

@@ -1,13 +1,14 @@
 import FavouriteEntity from "./favourite-entity";
 
-export type ListPokemonQuery = {
-  search: string;
-  offset: number;
-  limit: number;
-  show_favourites_only: boolean;
-};
-
 export type PokemonList = { results: { name: string }[] };
+
+export enum EntityType {
+  POKEMON = "pokemon",
+}
+
+export enum CacheType {
+  POKEMON = "pokemon",
+}
 
 export class Pokemon extends FavouriteEntity {
   name: string;
@@ -25,7 +26,7 @@ export class Pokemon extends FavouriteEntity {
   type: string[];
   is_favourite: boolean;
 
-  entity_type: string = "pokemon";
+  entity_type: string = EntityType.POKEMON;
 
   constructor(
     name: string,
@@ -60,11 +61,7 @@ export class Pokemon extends FavouriteEntity {
     this.is_favourite = is_favourite;
   }
 
-  static parseApiDataToPokemon(
-    operation_id: string,
-    api_data: any,
-    favourite_data: any
-  ): Pokemon {
+  static parseApiDataToPokemon(operation_id: string, api_data: any): Pokemon {
     return new Pokemon(
       api_data.name,
       api_data.id,
@@ -79,10 +76,7 @@ export class Pokemon extends FavouriteEntity {
       api_data.stats[4]["base_stat"],
       api_data.stats[5]["base_stat"],
       api_data.types.map((type: any) => type.type.name),
-      favourite_data.some(
-        (favourite: { entityId: any }) =>
-          favourite.entityId === String(api_data.id)
-      )
+      false
     );
   }
 }

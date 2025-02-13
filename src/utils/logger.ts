@@ -1,15 +1,22 @@
 class Logger {
   private static _instance: Logger;
   static getInstance(): Logger {
-    if(!Logger._instance) {
+    if (!Logger._instance) {
       Logger._instance = new Logger();
     }
     return Logger._instance;
   }
 
-  private log(level: string, operation_id: string | null, message: string, params?: object) {
+  private log(
+    level: string,
+    operation_id: string | null,
+    message: string,
+    params?: object,
+  ) {
     console.log(
-      `${new Date().toISOString()} : ${operation_id} - [${level.toUpperCase()}] - ${message} ${ params ? JSON.stringify(params) : ''}`,
+      `${new Date().toISOString()} : ${operation_id} - [${level.toUpperCase()}] - ${message} ${
+        params ? JSON.stringify(params) : ''
+      }`,
     );
   }
 
@@ -21,8 +28,16 @@ class Logger {
     this.log('log', operation_id, message, params);
   }
 
-  public error(operation_id: string | null, message: string, error?: any): void {
+  public error(
+    operation_id: string | null,
+    message: string,
+    error?: any,
+  ): void {
     this.log('error', operation_id, message, error);
+  }
+
+  public startLog(message: string) {
+    console.log(`${new Date().toISOString()} : [START UP] - ${message}`);
   }
 }
 

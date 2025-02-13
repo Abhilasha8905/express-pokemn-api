@@ -2,6 +2,7 @@
 
 import { Request, Response, NextFunction } from 'express';
 import logger from '../utils/logger';
+import { ServerResponseType } from '../utils/constants';
 
 /**
  * Intercepts the exceptions and logs them if required
@@ -25,14 +26,20 @@ const ExceptionHandlerMiddleware = (
 
   // log error
   logger.error(
-    null,
+    req.operation_id,
     `Error - ${JSON.stringify({
       status,
       message,
       requestUrl,
     })}`,
   );
-  return res.status(status).json({ status, message, requestUrl });
+  return res.status(status).json({
+    status: {
+      operation_id: req.operation_id,
+      message: ServerResponseType.ERROR,
+      error: message,
+    },
+  });
 };
 
 export default ExceptionHandlerMiddleware;
