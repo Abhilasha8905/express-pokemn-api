@@ -50,7 +50,7 @@ The **Express Pokémon API** is a RESTful API built using Node.js and Express th
 
 ## API Documentation
 For detailed API documentation, visit the Swagger UI:
-[Express Pokémon API Docs](https://express-pokemon-api.onrender.com/api-docs/#/POKEMON/get_pokemon)
+[Express Pokémon API Docs](https://express-pokemon-api.onrender.com/api-docs)
 
 ## Contribution
 Feel free to fork the repo, submit issues, and contribute enhancements.
