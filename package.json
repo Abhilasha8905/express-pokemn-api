@@ -6,8 +6,7 @@
   "scripts": {
     "debug": "node --inspect dist/app.js",
     "start": "ts-node src/index.ts",
-    "build": "tsc",
-    "serve": "node dist/index.js"
+    "build": "tsc && node dist/index.js"
   },
   "author": "",
   "license": "ISC",
