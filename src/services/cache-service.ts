@@ -5,7 +5,7 @@ export default class CacheService {
 
   set = (operation_id: string, key: string, value: string): void => {
     const method = "CacheService/set";
-    logger.debug(operation_id, `${method} - start`, { key, value });
+    logger.info(operation_id, `${method} - start`);
 
     this.cache_map.set(key, value);
     logger.info(operation_id, `${method} - end`);
@@ -13,7 +13,7 @@ export default class CacheService {
 
   get = (operation_id: string, key: string): string => {
     const method = "CacheService/get";
-    logger.debug(operation_id, `${method} - start`, { key });
+    logger.info(operation_id, `${method} - start`);
 
     const value = this.cache_map.get(key);
 

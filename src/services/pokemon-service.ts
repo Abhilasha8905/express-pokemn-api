@@ -76,7 +76,7 @@ export default class PokemonService extends HttpClient {
       const response = pokemons.map((pokemon) => ({
         ...pokemon,
         is_favourite: user_favourite_pokemons.some(
-          ({ entityId }) => pokemon.id === entityId,
+          ({ entityId }) => String(pokemon.id) === entityId
         ),
       }));
       logger.info(operation_id, `${method} - end`);
